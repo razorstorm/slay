@@ -4,9 +4,13 @@ from slay.tile import Tile
 
 
 class Grave(Structure):
+
     def __init__(self, location: Tile, owner: NaturePlayer):
         super().__init__(location, owner)
 
     @property
     def cost(self):
         return 0
+
+    def draw(self) -> None:
+        pass
