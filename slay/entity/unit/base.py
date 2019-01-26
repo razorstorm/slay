@@ -19,7 +19,6 @@ class Unit(Entity, ABC):
         self.has_move = has_move
 
     def __add__(self, other: 'Unit') -> Optional['Unit']:
-        # TODO: move this to rule
         # TODO: fix rank + rank (currently undefined behavior)
         if self.rank.value + other.rank.value > 4 or self.territory != other.territory:
             return None
@@ -34,7 +33,11 @@ class Unit(Entity, ABC):
         ])
 
     def move(self, new_location: 'Tile') -> Optional['Move']:
-        pass
+        self._end_turn_if_moved_onto_tree(new_location)
+        self._end_turn_if_attacked_enemy(new_location)
+
+        new_location.occupant = self
+        self.location = new_location
 
     def _can_defeat_tile_defender(self, new_location: 'Tile') -> bool:
         self_and_neighbors = [tile for tile in new_location.neighbors if tile.owner == new_location.owner] + [new_location]
@@ -53,3 +56,11 @@ class Unit(Entity, ABC):
         ):
             return False
         return True
+
+    def _end_turn_if_moved_onto_tree(self, new_location: 'Tile') -> None:
+        if isinstance(new_location.occupant, (PineTree, PalmTree)):
+            self.has_move = False
+
+    def _end_turn_if_attacked_enemy(self, new_location: 'Tile') -> None:
+        if new_location.owner != self.territory.owner:
+            self.has_move = False
