@@ -11,7 +11,7 @@ class AI(Player):
     def __init__(self):
         self.strategy = None
 
-    def take_turn(self, board: Board) -> List[Move]:
+    def take_turn(self, board: Board, screen: Any) -> List[Move]:
         self.strategy = Strategy(self, board)
         return self.strategy.take_turn()
 

@@ -7,7 +7,7 @@ from slay.player import Player
 
 class Nature(Player):
 
-    def take_turn(self, board: Board) -> List[Move]:
+    def take_turn(self, board: Board, screen: Any) -> List[Move]:
         pass
 
     def draw(self, screen: Any):

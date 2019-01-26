@@ -8,7 +8,7 @@ from slay.move import Move
 class Player(ABC):
 
     @abstractmethod
-    def take_turn(self, board: Board) -> List[Move]:
+    def take_turn(self, board: Board, screen: Any) -> List[Move]:
         pass
 
     @abstractmethod

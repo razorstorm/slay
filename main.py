@@ -19,8 +19,9 @@ def main(screen: Any, total_players: int, human_players: int):
     ]
     game = Game(players)
     while game.winner is None:
-        game.next_turn()
-        game.board.draw(screen)
+        game.next_turn(screen)
+        game.draw(screen)
+        screen.refresh()
 
     endwin()
 

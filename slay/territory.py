@@ -43,14 +43,30 @@ class Territory(object):
             tile.occupant is None or isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
         )
 
+    def create_village(self) -> Optional[Territory]:
+        if self.village is not None:
+            return
+        positions = {tile for tile in self.tiles if tile.occupant is None}
+        return self + Village(choice(positions), self)
+
     @classmethod
     def _add_territory(cls, self: Territory, other: Territory) -> Optional[Territory]:
+        smaller = min(self, other, key=lambda territory: len(territory.tiles))
+        larger = max(self, other, key=lambda territory: len(territory.tiles))
+        # TODO: implement subtract
+        # does this work? feels messy because of cleaning up references everywhere
+        # how do I remove all references to the smaller territory?
+        smaller -= smaller.village
+        # smaller.village.tile.occupant = None
+        # smaller.village = None
+        larger.savings += smaller.savings
         self += [tile for tile in other.tiles]
         return self
 
     @classmethod
     def _add_tile(cls, self: Territory, other: Tile) -> Optional[Territory]:
         self.tiles += other
+        other.owner = self.owner
         if other.occupant is not None:
             self += other.occupant
         return self
@@ -62,12 +78,6 @@ class Territory(object):
         self.village = other
         self += other.location
         return self
-
-    def create_village(self) -> Optional[Territory]:
-        if self.village is not None:
-            return
-        positions = {tile for tile in self.tiles if tile.occupant is None}
-        return self + Village(choice(positions), self)
 
     @classmethod
     def _add_funcs(cls) -> Dict[type, Callable[[Territory, Any], Optional[Territory]]]:
