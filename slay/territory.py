@@ -34,7 +34,7 @@ class Territory(object):
         self.savings = savings
 
     @property
-    def wages(self) -> int:
+    def upkeep(self) -> int:
         return sum(unit.upkeep for unit in self.units)
 
     @property
