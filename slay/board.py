@@ -27,9 +27,9 @@ class Board(object):
 
     @classmethod
     def _first_territory_in_neighbors(
-            cls,
-            territories_by_tile: Dict['Tile', 'Territory'],
-            neighbors: Set['Tile'],
+        cls,
+        territories_by_tile: Dict['Tile', 'Territory'],
+        neighbors: Set['Tile'],
     ) -> Optional['Territory']:
         for neighbor in neighbors:
             if neighbor in territories_by_tile.keys():

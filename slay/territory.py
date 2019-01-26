@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from random import choice
-from typing import Optional, Any, Set, Union, Callable, Dict
+from typing import Optional, Any, Set, Union, Callable, Dict, List
 
 from slay.entity.structure.base import Structure
 from slay.entity.structure.castle import Castle
