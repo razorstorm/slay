@@ -12,5 +12,5 @@ class AIPlayer(Player):
         self.ai = None
 
     def take_turn(self, board: Board) -> List[Move]:
-        self.ai = AI(self)
+        self.ai = AI(self, board)
         return self.ai.take_turn()

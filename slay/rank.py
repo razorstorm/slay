@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from enum import Enum
+from typing import Optional
 
 
 class Rank(Enum):
@@ -16,7 +17,7 @@ class Rank(Enum):
     def upkeep(self):
         return RANK_TO_UPKEEP_MAP.get(self)
 
-    def __add__(self, other: Rank) -> Rank:
+    def __add__(self, other: Rank) -> Optional[Rank]:
         return VALUE_TO_RANKS.get(self.value + other.value)
 
 

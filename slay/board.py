@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List
 
 from slay.move import Move
 from slay.player import Player
@@ -13,7 +13,7 @@ class Board(object):
         self.tiles = self._generate_tiles()
         self.territories = self._territories_from_tiles(self.tiles)
 
-    def _generate_tiles(self) -> Dict[Tile]:
+    def _generate_tiles(self) -> List[Tile]:
         pass
 
     def _territories_from_tiles(self, tiles: List[Tile]) -> List[Territory]:

@@ -10,6 +10,9 @@ from slay.territory import Territory
 
 
 # this only works for 1 turn, instantiate again each time need to use a lil
+from slay.tile import Tile
+
+
 class AI(object):
 
     def __init__(self, player: AIPlayer, board: Board):
@@ -34,7 +37,9 @@ class AI(object):
         # FIXME: there is a case where combining territories gives this territory more money
         # the AI should spend that money on units
         while territory.can_buy_unit:
-            moveable_units.append(territory.buy_unit())
+            # FIXME: find the location before buying a unit
+            location = Tile()
+            moveable_units.append(territory.buy_unit(location))
 
         while moveable_units:
             unit = moveable_units.pop()

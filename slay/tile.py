@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from slay.entity.entity import Entity
+from slay.entity import Entity
 
 
 class Tile(object):
