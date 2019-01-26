@@ -1,16 +1,14 @@
-from abc import abstractmethod, ABC
 from typing import List, Any
 
 from slay.board import Board
 from slay.move import Move
+from slay.player import Player
 
 
-class Player(ABC):
+class Human(Player):
 
-    @abstractmethod
     def take_turn(self, board: Board) -> List[Move]:
         pass
 
-    @abstractmethod
     def draw(self, screen: Any):
         pass

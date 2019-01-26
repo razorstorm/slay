@@ -1,8 +1,7 @@
 from abc import abstractmethod, ABC
-from typing import Optional
+from typing import Any
 
-from slay.move import Move
-from slay.player import Player
+from slay.territory import Territory
 from slay.tile import Tile
 
 
@@ -11,19 +10,12 @@ class Entity(ABC):
     cost: int = NotImplemented
     upkeep: int = NotImplemented
 
-    def __init__(self, location: Tile, owner: Player):
-        # This is a reference to a tile object
+    def __init__(self, location: Tile, territory: Territory):
         self.location = location
-        self.owner = owner
+        self.territory = territory
+        self.owner = territory.owner
 
     @abstractmethod
-    def is_valid_move(self, new_location: Tile) -> bool:
-        pass
-
-    @abstractmethod
-    def move(self, new_location: Tile) -> Optional[Move]:
-        pass
-
-    @abstractmethod
-    def draw(self) -> None:
+    def draw(self, screen: Any):
+        # TODO: order matters, should use painter's algorithm
         pass

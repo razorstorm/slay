@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 
 from slay.board import Board
 from slay.player import Player
@@ -24,3 +24,6 @@ class Game(object):
         self.player_moves.append(moves)
         self.board = self.board.apply(moves)
         self._increment_turn()
+
+    def draw(self, screen: Any):
+        pass
