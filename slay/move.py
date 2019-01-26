@@ -1,4 +1,4 @@
-from slay.entities.unit import Unit
+from slay.entity.unit import Unit
 from slay.tile import Tile
 
 

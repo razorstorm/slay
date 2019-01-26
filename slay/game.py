@@ -19,7 +19,7 @@ class Game(object):
 
     def next_turn(self):
         player = self.players[self.current_turn]
-        moves = player.make_moves()
+        moves = player.take_turn(self.board)
         self.board_history.append(self.board)
         self.player_moves.append(moves)
         self.board = self.board.apply(moves)
