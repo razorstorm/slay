@@ -1,14 +1,15 @@
 from __future__ import annotations
 
+from abc import abstractmethod, ABC
 from typing import List, Any
 
-from slay.player.base import Player
 
+class Player(ABC):
 
-class Human(Player):
-
+    @abstractmethod
     def take_turn(self, board: 'Board', screen: Any) -> List['Move']:
         pass
 
+    @abstractmethod
     def draw(self, screen: Any):
         pass

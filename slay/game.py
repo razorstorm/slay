@@ -1,15 +1,18 @@
+from __future__ import annotations
+
 from typing import List, Any
 
 from slay.board import Board
-from slay.player import Player
+from slay.hud import Hud
 from slay.player.nature import Nature
 
 
 class Game(object):
 
-    def __init__(self, players: List[Player]):
+    def __init__(self, players: List['Player']):
         self.players = players
         self.nature = Nature()
+        self.hud = Hud(players)
         self.winner = None
         self.current_turn = 0
         self.player_moves = list()
@@ -30,3 +33,4 @@ class Game(object):
 
     def draw(self, screen: Any):
         self.board.draw(screen)
+        self.hud.draw(screen)

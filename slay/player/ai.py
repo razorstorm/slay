@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 from typing import List, Any
 
-from slay.board import Board
-from slay.move import Move
-from slay.player import Player
-from slay.strategy import Strategy
+from slay.player.base import Player
+from slay.strategy.base import Strategy
 
 
 class AI(Player):
@@ -11,7 +11,7 @@ class AI(Player):
     def __init__(self):
         self.strategy = None
 
-    def take_turn(self, board: Board, screen: Any) -> List[Move]:
+    def take_turn(self, board: 'Board', screen: Any) -> List['Move']:
         self.strategy = Strategy(self, board)
         return self.strategy.take_turn()
 

@@ -2,13 +2,10 @@ from __future__ import annotations
 
 from typing import Any, Set, Optional
 
-from slay.entity import Entity
-from slay.player import Player
-
 
 class Tile(object):
 
-    def __init__(self, neighbors: Set[Tile], owner: Player, occupant: Optional[Entity]):
+    def __init__(self, neighbors: Set['Tile'], owner: 'Player', occupant: Optional['Entity']):
         self.neighbors = neighbors
         self.owner = owner
         self.occupant = occupant

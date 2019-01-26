@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from typing import Any
 
-from slay.entity.unit import Unit
+from slay.entity.unit.base import Unit
 
 
 class Spearman(Unit):

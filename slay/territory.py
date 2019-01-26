@@ -3,13 +3,12 @@ from __future__ import annotations
 from random import choice
 from typing import Optional, Any, Set, Union, Callable, Dict
 
-from slay.entity.structure import Structure
+from slay.entity.structure.base import Structure
 from slay.entity.structure.castle import Castle
 from slay.entity.structure.palm_tree import PalmTree
 from slay.entity.structure.pine_tree import PineTree
 from slay.entity.structure.village import Village
-from slay.entity.unit import Unit
-from slay.player import Player
+from slay.entity.unit.base import Unit
 from slay.rank import Rank
 from slay.tile import Tile
 
@@ -18,7 +17,7 @@ class Territory(object):
 
     INCOME_PER_TILE = 2
 
-    def __init__(self, owner: Player, tiles: Set[Tile], village: Optional[Village], savings: int = 0):
+    def __init__(self, owner: 'Player', tiles: Set['Tile'], village: Optional['Village'], savings: int = 0):
         self.owner = owner
         self.tiles = tiles
         # FIXME: this currently counts trees as part of structures
@@ -43,14 +42,14 @@ class Territory(object):
             tile.occupant is None or isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
         )
 
-    def create_village(self) -> Optional[Territory]:
+    def create_village(self) -> Optional['Territory']:
         if self.village is not None:
             return
         positions = {tile for tile in self.tiles if tile.occupant is None}
         return self + Village(choice(positions), self)
 
     @classmethod
-    def _add_territory(cls, self: Territory, other: Territory) -> Optional[Territory]:
+    def _add_territory(cls, self: 'Territory', other: 'Territory') -> Optional['Territory']:
         smaller = min(self, other, key=lambda territory: len(territory.tiles))
         larger = max(self, other, key=lambda territory: len(territory.tiles))
         # TODO: implement subtract
@@ -64,7 +63,7 @@ class Territory(object):
         return self
 
     @classmethod
-    def _add_tile(cls, self: Territory, other: Tile) -> Optional[Territory]:
+    def _add_tile(cls, self: 'Territory', other: 'Tile') -> Optional['Territory']:
         self.tiles += other
         other.owner = self.owner
         if other.occupant is not None:
@@ -72,7 +71,7 @@ class Territory(object):
         return self
 
     @classmethod
-    def _add_village(cls, self: Territory, other: Village) -> Optional[Territory]:
+    def _add_village(cls, self: 'Territory', other: 'Village') -> Optional['Territory']:
         if self.village is not None:
             return
         self.village = other
@@ -80,14 +79,14 @@ class Territory(object):
         return self
 
     @classmethod
-    def _add_funcs(cls) -> Dict[type, Callable[[Territory, Any], Optional[Territory]]]:
+    def _add_funcs(cls) -> Dict[type, Callable[['Territory', Any], Optional['Territory']]]:
         return {
             Territory: cls._add_territory,
             Tile: cls._add_tile,
             Village: cls._add_village,
         }
 
-    def __add__(self, other: Union[Territory, Tile, Village]) -> Optional[Territory]:
+    def __add__(self, other: Union['Territory', 'Tile', 'Village']) -> Optional['Territory']:
         add_func = self._add_funcs()[type(other)]
         return add_func(self, other)
 
@@ -103,11 +102,11 @@ class Territory(object):
     def can_buy_structure(self) -> bool:
         return self.savings >= Castle.cost
 
-    def buy_unit(self, location: Tile) -> Unit:
+    def buy_unit(self, location: 'Tile') -> 'Unit':
         self.savings -= Unit.cost
         return Unit(location, self, Rank.PEASANT, has_move=True)
 
-    def buy_castle(self, location: Tile) -> Castle:
+    def buy_castle(self, location: 'Tile') -> 'Castle':
         self.savings -= Castle.cost
         return Castle(location, self)
 
