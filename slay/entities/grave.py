@@ -1,12 +1,12 @@
 from slay.entities.structure import Structure
-from slay.player import Player
+from slay.nature_player import NaturePlayer
 from slay.tile import Tile
 
 
-class Castle(Structure):
-    def __init__(self, location: Tile, owner: Player):
+class Grave(Structure):
+    def __init__(self, location: Tile, owner: NaturePlayer):
         super().__init__(location, owner)
 
     @property
     def cost(self):
-        return 10
+        return 0

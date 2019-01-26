@@ -1,11 +1,12 @@
 from slay.entities.entity import Rank
 from slay.entities.unit import Unit
+from slay.player import Player
 from slay.tile import Tile
 
 
 class Soldier(Unit):
-    def __init__(self, location: Tile, rank: Rank):
-        super().__init__(location)
+    def __init__(self, location: Tile, rank: Rank, owner: Player):
+        super().__init__(location, owner)
         self.rank = rank
 
     @property
