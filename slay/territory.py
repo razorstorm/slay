@@ -102,6 +102,12 @@ class Territory(object):
     def can_buy_structure(self) -> bool:
         return self.savings >= Castle.cost
 
+    def contains(self, location: 'Tile') -> bool:
+        return location in self.tiles
+
+    def has_neighbor(self, location: 'Tile') -> bool:
+        return location in {neighbor for tile in self.tiles for neighbor in tile.neighbors}
+
     def buy_unit(self, location: 'Tile') -> 'Unit':
         self.savings -= Unit.cost
         return Unit(location, self, Rank.PEASANT, has_move=True)
