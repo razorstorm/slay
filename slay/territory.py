@@ -40,7 +40,7 @@ class Territory(object):
     @property
     def income(self) -> int:
         return self.INCOME_PER_TILE * sum(
-            tile.occupant is None or isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
+            tile.occupant is None or not isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
         )
 
     def create_village(self) -> Optional[Territory]:
