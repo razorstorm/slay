@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from enum import Enum
 
 from slay.player import Player
 from slay.tile import Tile
@@ -18,10 +19,9 @@ class Rank(Enum):
 
 
 class Entity(object):
-    def __init__(self, location: Tile, can_move: bool, owner: Player):
+    def __init__(self, location: Tile, owner: Player):
         # This is a reference to a tile object
         self.location = location
-        self.can_move = can_move
         self.owner = owner
 
     @property
@@ -33,3 +33,15 @@ class Entity(object):
     @abstractmethod
     def upkeep(self):
         return None
+
+    @abstractmethod
+    def can_move(self, new_location: Tile) -> bool:
+        pass
+
+    @abstractmethod
+    def move(self, new_location: Tile) -> None:
+        pass
+
+    @abstractmethod
+    def draw(self) -> None:
+        pass

@@ -7,7 +7,7 @@ from slay.tile import Tile
 
 class Structure(Entity):
     def __init__(self, location: Tile, owner: Player):
-        super().__init__(location, False, owner)
+        super().__init__(location, owner)
 
     @property
     def upkeep(self):
