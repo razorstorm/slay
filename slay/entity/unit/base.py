@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Optional
+from typing import Optional, Any
 
 from slay.entity.base import Entity
 
@@ -25,7 +25,13 @@ class Unit(Entity, ABC):
 
     def is_valid_move(self, new_location: 'Tile') -> bool:
         # TODO: move to rule-based engine
-        pass
+        neighbors = [tile for tile in new_location.neighbors if tile.owner == new_location.owner]
+        defender_ranks = [neighbor.occupant.rank for neighbor in neighbors if neighbor.occupant is not None]
+        primary_defender_rank = max(defender_ranks) if defender_ranks else None
+        return primary_defender_rank is None or primary_defender_rank < self.rank
 
     def move(self, new_location: 'Tile') -> Optional['Move']:
+        pass
+
+    def draw(self, screen: Any):
         pass
