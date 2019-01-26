@@ -35,7 +35,7 @@ class Entity(object):
         return None
 
     @abstractmethod
-    def can_move(self, new_location: Tile) -> bool:
+    def is_valid_move(self, new_location: Tile) -> bool:
         pass
 
     @abstractmethod
