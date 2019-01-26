@@ -20,10 +20,10 @@ class Territory(object):
     def __init__(self, owner: 'Player', tiles: Set['Tile'], village: Optional['Village'], savings: int = 0):
         self.owner = owner
         self.tiles = tiles
-        # FIXME: this currently counts trees as part of structures
         self.structures = {
             tile.occupant for tile in self.tiles
-            if tile.occupant is not None and isinstance(tile.occupant, Structure)
+            if tile.occupant is not None and isinstance(tile.occupant, Structure) and
+            not isinstance(tile.occupant, (PineTree, PalmTree))
         }
         self.units = {
             tile.occupant for tile in self.tiles
@@ -33,13 +33,13 @@ class Territory(object):
         self.savings = savings
 
     @property
-    def wages(self) -> int:
+    def upkeep(self) -> int:
         return sum(unit.upkeep for unit in self.units)
 
     @property
     def income(self) -> int:
         return self.INCOME_PER_TILE * sum(
-            tile.occupant is None or isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
+            tile.occupant is None or not isinstance(tile.occupant, (PineTree, PalmTree)) for tile in self.tiles
         )
 
     def create_village(self) -> Optional['Territory']:
