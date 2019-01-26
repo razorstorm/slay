@@ -6,9 +6,9 @@ from slay.tile import Tile
 
 
 class Unit(Entity):
-    def __init__(self, location: Tile, owner: Player, can_move: bool):
+    def __init__(self, location: Tile, owner: Player, has_turn: bool):
         super().__init__(location, owner)
-        self.can_move = can_move
+        self.can_move = has_turn
 
     @property
     @abstractmethod
