@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Optional, Any
+from typing import Optional
 
 from slay.entity.base import Entity
 from slay.entity.structure.palm_tree import PalmTree
@@ -34,9 +34,6 @@ class Unit(Entity, ABC):
         ])
 
     def move(self, new_location: 'Tile') -> Optional['Move']:
-        pass
-
-    def draw(self, screen: Any):
         pass
 
     def _can_defeat_tile_defender(self, new_location: 'Tile') -> bool:

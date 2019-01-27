@@ -9,7 +9,3 @@ class Player(ABC):
     @abstractmethod
     def take_turn(self, board: 'Board', screen: Any) -> List['Move']:
         pass
-
-    @abstractmethod
-    def draw(self, screen: Any):
-        pass

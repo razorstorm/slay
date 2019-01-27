@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from random import choice
+from random import choice, getrandbits
 from typing import List, Any, Set, Optional, Dict
 
 from slay.territory import Territory
@@ -9,20 +9,28 @@ from slay.tile import Tile
 
 class Board(object):
 
-    def __init__(self, players: List['Player'], size: int = 10):
+    def __init__(self, players: List['Player'], size: int, window: Any):
         self.players = players
         self.size = size
+        self.window = window
+        # TODO: truncate
+        self.window.addstr(1, 1, "Board")
+        self.window.refresh()
         self.tiles = self._generate_tiles(self.players, self.size)
         self.territories_by_player = {
             player: self._players_territories_from_tiles(player, self.tiles) for player in players
         }
 
     @classmethod
+    def _generate_tile(cls, player: 'Player'):
+        return Tile(bool(getrandbits(1)), set(), player, None)
+
+    @classmethod
     def _generate_tiles(cls, players: List['Player'], board_size: int) -> Set['Tile']:
-        tiles = {(i, j): Tile(set(), choice(players), None) for i in range(board_size) for j in range(board_size)}
-        for (i, j) in tiles.keys():
-            current = tiles[(i, j)]
-            current.neighbors += []
+        tiles = {(x, y): cls._generate_tile(choice(players)) for x in range(board_size) for y in range(board_size)}
+        for (x, y) in tiles.keys():
+            current = tiles[(x, y)]
+            # current.neighbors += []
         return set(tiles.values())
 
     @classmethod
@@ -54,6 +62,3 @@ class Board(object):
 
     def apply(self, moves: List['Move']):
         pass
-
-    def draw(self, screen: Any):
-        [territory.draw(screen) for territory in self.territories_by_player.values()]

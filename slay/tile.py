@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Set, Optional
+from typing import Set, Optional
 
 
 class Tile(object):
@@ -10,8 +10,3 @@ class Tile(object):
         self.neighbors = neighbors
         self.owner = owner
         self.occupant = occupant
-
-    def draw(self, screen: Any):
-        if self.occupant is not None:
-            self.occupant.draw(screen)
-        # TODO: draw self

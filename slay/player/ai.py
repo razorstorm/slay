@@ -14,6 +14,3 @@ class AI(Player):
     def take_turn(self, board: 'Board', screen: Any) -> List['Move']:
         self.strategy = Strategy(self, board)
         return self.strategy.take_turn()
-
-    def draw(self, screen: Any):
-        pass

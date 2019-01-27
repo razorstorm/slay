@@ -5,11 +5,9 @@ from typing import Any, List
 
 class Hud(object):
 
-    def __init__(self, players: List['Player']):
+    def __init__(self, players: List['Player'], window: Any):
         self.players = players
-
-    def draw(self, screen: Any):
-        [player.draw(screen) for i, player in enumerate(self.players)]
-        height, width = screen.getmaxyx()
-        title = "curses example"[:width - 1]
-        screen.addstr(0, 0, title)
+        self.window = window
+        # TODO: truncate
+        self.window.addstr(1, 1, "HUD")
+        self.window.refresh()

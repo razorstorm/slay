@@ -45,7 +45,7 @@ class Territory(object):
     def create_village(self) -> Optional['Territory']:
         if self.village is not None:
             return
-        positions = {tile for tile in self.tiles if tile.occupant is None}
+        positions = [tile for tile in self.tiles if tile.occupant is None]
         return self + Village(choice(positions), self)
 
     @classmethod
@@ -55,27 +55,27 @@ class Territory(object):
         # TODO: implement subtract
         # does this work? feels messy because of cleaning up references everywhere
         # how do I remove all references to the smaller territory?
-        smaller -= smaller.village
+        # smaller -= smaller.village
         # smaller.village.tile.occupant = None
         # smaller.village = None
-        larger.savings += smaller.savings
-        self += [tile for tile in other.tiles]
+        # larger.savings += smaller.savings
+        # self += [tile for tile in other.tiles]
         return self
 
     @classmethod
     def _add_tile(cls, self: 'Territory', other: 'Tile') -> Optional['Territory']:
-        self.tiles += other
-        other.owner = self.owner
-        if other.occupant is not None:
-            self += other.occupant
+        # self.tiles += other
+        # other.owner = self.owner
+        # if other.occupant is not None:
+        #     self += other.occupant
         return self
 
     @classmethod
     def _add_village(cls, self: 'Territory', other: 'Village') -> Optional['Territory']:
-        if self.village is not None:
-            return
-        self.village = other
-        self += other.location
+        # if self.village is not None:
+        #     return
+        # self.village = other
+        # self += other.location
         return self
 
     @classmethod
@@ -115,6 +115,3 @@ class Territory(object):
     def buy_castle(self, location: 'Tile') -> 'Castle':
         self.savings -= Castle.cost
         return Castle(location, self)
-
-    def draw(self, screen: Any):
-        [tile.draw(screen) for tile in self.tiles]
